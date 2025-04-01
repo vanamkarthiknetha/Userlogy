@@ -18,7 +18,9 @@ export default function Navbar() {
     pricesWs.onmessage = function (msg) {
       setCoin(JSON.parse(msg.data))
     }
-
+    return () => {
+      pricesWs.close()
+    }
   }, [])
 
   useEffect(() => {
