@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { TrendingDown, TrendingUp } from "lucide-react"
 import Link from "next/link"
 import { useDispatch, useSelector } from "react-redux"
-import { toggleFavoriteCrypto,set } from "@/redux/features/cryptoSlice"
+import { toggleFavoriteCrypto, set } from "@/redux/features/cryptoSlice"
 import type { RootState } from "@/redux/store"
 import { Button } from "@/components/ui/button"
 import { useEffect } from "react"
@@ -64,20 +64,20 @@ export default function CryptoSection() {
   }
 
   const fetchCrypto = async () => {
-      let response ;
-      let data= [] ;
-      response = await fetch(`/api/crypto/c?q=${"bitcoin"}`)
-      data.push(await response.json())
-      response = await fetch(`/api/crypto/c?q=${"ethereum"}`)
-      data.push(await response.json())
-      response = await fetch(`/api/crypto/c?q=${"solana"}`)
-      data.push(await response.json())
-      dispatch(set(data))
-    }
-    useEffect((
-    ) => {
-      fetchCrypto()
-    }, [])
+    let response;
+    let data = [];
+    response = await fetch(`/api/crypto/c?q=${"bitcoin"}`)
+    data.push(await response.json())
+    response = await fetch(`/api/crypto/c?q=${"ethereum"}`)
+    data.push(await response.json())
+    response = await fetch(`/api/crypto/c?q=${"solana"}`)
+    data.push(await response.json())
+    dispatch(set(data))
+  }
+  useEffect((
+  ) => {
+    fetchCrypto()
+  }, [])
 
   return (
     <Card>
@@ -86,9 +86,12 @@ export default function CryptoSection() {
         <CardDescription>Live prices and market data</CardDescription>
       </CardHeader>
       <CardContent>
+        {
+          cryptos.length === 0 && <p>Loading...</p>
+        }
         <div className="space-y-4">
-          {cryptos.map(({data:crypto}) => (
-            <div key={crypto.id} className="flex items-center justify-between p-3 bg-primary/5 rounded-lg">
+          {cryptos.map(({ data: crypto }) => (
+            <div key={crypto.name} className="flex items-center justify-between p-3 bg-primary/5 rounded-lg">
               <div className="flex items-center gap-4">
                 <div>
                   <Link href={`/crypto/${crypto.id}`} className="font-medium hover:underline">

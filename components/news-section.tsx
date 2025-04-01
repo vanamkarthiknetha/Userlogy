@@ -64,9 +64,12 @@ export default function NewsSection() {
         <CardDescription>Top crypto and weather-related headlines</CardDescription>
       </CardHeader>
       <CardContent>
+      {
+          news.length === 0 && <p>Loading...</p>
+        }
         <div className="space-y-4">
           {news.map((news) => (
-            <div key={news.id} className="border-b pb-3 last:border-0 last:pb-0">
+            <div key={news.title} className="border-b pb-3 last:border-0 last:pb-0">
               <Link href={news.url} target="_blank" className="font-medium hover:underline">
                 {news.title}
               </Link>

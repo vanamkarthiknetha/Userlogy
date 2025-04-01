@@ -53,6 +53,9 @@ export default function WeatherSection() {
         <CardDescription>Current weather conditions in major cities</CardDescription>
       </CardHeader>
       <CardContent>
+        {
+          cities.length === 0 && <p>Loading...</p>
+        }
         <div className="space-y-4">
           {cities.map((city) => (
             <div key={city.location.name} className="flex items-center justify-between p-3 bg-primary/5 rounded-lg">
