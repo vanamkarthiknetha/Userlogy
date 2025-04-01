@@ -33,7 +33,7 @@ export default function WeatherSection() {
 
     let response ;
     let data= [] ;
-    response = await fetch(`/api/weather/w?q=${"Paris"}`)
+    response = await fetch(`/api/weather/w?q=${"London"}`)
     data.push(await response.json())
     response = await fetch(`/api/weather/w?q=${"New York"}`)
     data.push(await response.json())

@@ -1,5 +1,7 @@
+"use client"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
+import { useEffect, useState } from "react"
 
 // Mock news data
 const NEWS_DATA = [
@@ -41,6 +43,20 @@ const NEWS_DATA = [
 ]
 
 export default function NewsSection() {
+  const [news, setnews] = useState([])
+
+  const fetchNews = async () => {
+  
+      let response ;
+      response = await fetch(`/api/news/n`)
+      const data=await response.json()
+      console.log(data)
+      setnews(data.articles.slice(0,4))
+    }
+    useEffect((
+    ) => {
+      fetchNews()
+    }, [])
   return (
     <Card>
       <CardHeader>
@@ -49,15 +65,15 @@ export default function NewsSection() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {NEWS_DATA.map((news) => (
+          {news.map((news) => (
             <div key={news.id} className="border-b pb-3 last:border-0 last:pb-0">
-              <Link href={news.url} className="font-medium hover:underline">
+              <Link href={news.url} target="_blank" className="font-medium hover:underline">
                 {news.title}
               </Link>
               <div className="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
-                <span>{news.source}</span>
+                <span>{news.source.name}</span>
                 <span>•</span>
-                <span>{news.date}</span>
+                <span>{news.publishedAt}</span>
               </div>
             </div>
           ))}

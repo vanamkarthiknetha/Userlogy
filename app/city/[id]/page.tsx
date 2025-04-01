@@ -14,7 +14,7 @@ import type { RootState } from "@/redux/store"
 
 // Mock data for city details
 const CITY_DATA = {
-  "new-york": {
+  "New York": {
     name: "New York",
     country: "United States",
     current: {
@@ -41,8 +41,9 @@ const CITY_DATA = {
       { date: "Mar 27", temp: 16 },
       { date: "Mar 26", temp: 18 },
     ],
+  
   },
-  london: {
+  London: {
     name: "London",
     country: "United Kingdom",
     current: {
@@ -70,7 +71,7 @@ const CITY_DATA = {
       { date: "Mar 26", temp: 12 },
     ],
   },
-  tokyo: {
+  Tokyo: {
     name: "Tokyo",
     country: "Japan",
     current: {
@@ -101,24 +102,18 @@ const CITY_DATA = {
 }
 
 export default function CityPage() {
-  
   const params = useParams()
   const cityId = params.id as string
   const [cityData, setCityData] = useState<any>(null)
-  
+
   const dispatch = useDispatch()
-  const cities = useSelector((state: RootState) => state.weather.cities)
   const favoriteCities = useSelector((state: RootState) => state.weather.favoriteCities)
   const isFavorite = favoriteCities.includes(cityId)
 
-  const fetchWeather = async () => {
-    let response ;
-    response = await fetch(`/api/weather?q=${"Paris"}`)
-    setCityData(await response.json())
-  }
 
   useEffect(() => {
-    fetchWeather()
+    // In a real app, this would be an API call
+    setCityData(CITY_DATA[cityId as keyof typeof CITY_DATA] || null)
   }, [cityId])
 
   if (!cityData) {
@@ -142,8 +137,8 @@ export default function CityPage() {
               <ArrowLeft className="h-4 w-4" />
             </Button>
           </Link>
-          <h1 className="text-3xl font-bold">{cityData.location.name}</h1>
-          <span className="text-muted-foreground">{cityData.location.country}</span>
+          <h1 className="text-3xl font-bold">{cityData.name}</h1>
+          <span className="text-muted-foreground">{cityData.country}</span>
         </div>
         <Button variant={isFavorite ? "default" : "outline"} onClick={handleToggleFavorite}>
           {isFavorite ? "★ Favorited" : "☆ Add to Favorites"}
@@ -158,9 +153,9 @@ export default function CityPage() {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="flex flex-col items-center justify-center p-4 bg-primary/5 rounded-lg">
-              <span className="text-4xl font-bold">{cityData.current.temp_c}°C</span>
-              <span className="text-muted-foreground">Feels like {cityData.current.feelslike_c}°C</span>
-              <span className="mt-2 text-lg">{cityData.current.condition.text}</span>
+              <span className="text-4xl font-bold">{cityData.current.temp}°C</span>
+              <span className="text-muted-foreground">Feels like {cityData.current.feelsLike}°C</span>
+              <span className="mt-2 text-lg">{cityData.current.condition}</span>
             </div>
             <div className="space-y-4">
               <div className="flex justify-between">
@@ -169,11 +164,11 @@ export default function CityPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Wind Speed</span>
-                <span>{cityData.current.wind_kph} km/h</span>
+                <span>{cityData.current.windSpeed} km/h</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Pressure</span>
-                <span>{cityData.current.pressure_mb} mb</span>
+                <span>{cityData.current.pressure} hPa</span>
               </div>
             </div>
             <div className="space-y-2">

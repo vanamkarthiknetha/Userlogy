@@ -1,12 +1,14 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 interface CryptoState {
+  cryptos: any[]
   favoriteCryptos: string[]
   loading: boolean
   error: string | null
 }
 
 const initialState: CryptoState = {
+  cryptos: [],
   favoriteCryptos: [],
   loading: false,
   error: null,
@@ -47,10 +49,13 @@ const cryptoSlice = createSlice({
       // For this mock UI, we're just handling the action
       console.log(`Updating ${action.payload.id} price by ${action.payload.priceChange.toFixed(2)}%`)
     },
+    set:(state, action: PayloadAction<any[]>) => {
+      state.cryptos = action.payload    
+    },
   },
 })
 
-export const { toggleFavoriteCrypto, fetchCryptoStart, fetchCryptoSuccess, fetchCryptoFailure, updateCryptoPrice } =
+export const { toggleFavoriteCrypto, fetchCryptoStart, fetchCryptoSuccess, fetchCryptoFailure, updateCryptoPrice,set } =
   cryptoSlice.actions
 
 export default cryptoSlice.reducer

@@ -4,9 +4,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { TrendingDown, TrendingUp } from "lucide-react"
 import Link from "next/link"
 import { useDispatch, useSelector } from "react-redux"
-import { toggleFavoriteCrypto } from "@/redux/features/cryptoSlice"
+import { toggleFavoriteCrypto,set } from "@/redux/features/cryptoSlice"
 import type { RootState } from "@/redux/store"
 import { Button } from "@/components/ui/button"
+import { useEffect } from "react"
 
 // Mock crypto data
 const CRYPTO_DATA = [
@@ -38,6 +39,7 @@ const CRYPTO_DATA = [
 
 export default function CryptoSection() {
   const dispatch = useDispatch()
+  const cryptos = useSelector((state: RootState) => state.crypto.cryptos)
   const favoriteCryptos = useSelector((state: RootState) => state.crypto.favoriteCryptos)
 
   const handleToggleFavorite = (cryptoId: string) => {
@@ -61,6 +63,22 @@ export default function CryptoSection() {
     return formatCurrency(num)
   }
 
+  const fetchCrypto = async () => {
+      let response ;
+      let data= [] ;
+      response = await fetch(`/api/crypto/c?q=${"bitcoin"}`)
+      data.push(await response.json())
+      response = await fetch(`/api/crypto/c?q=${"ethereum"}`)
+      data.push(await response.json())
+      response = await fetch(`/api/crypto/c?q=${"solana"}`)
+      data.push(await response.json())
+      dispatch(set(data))
+    }
+    useEffect((
+    ) => {
+      fetchCrypto()
+    }, [])
+
   return (
     <Card>
       <CardHeader>
@@ -69,7 +87,7 @@ export default function CryptoSection() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {CRYPTO_DATA.map((crypto) => (
+          {cryptos.map(({data:crypto}) => (
             <div key={crypto.id} className="flex items-center justify-between p-3 bg-primary/5 rounded-lg">
               <div className="flex items-center gap-4">
                 <div>
@@ -81,16 +99,16 @@ export default function CryptoSection() {
               </div>
               <div className="flex items-center gap-4">
                 <div className="text-right">
-                  <div className="text-xl font-bold">{formatCurrency(crypto.price)}</div>
+                  <div className="text-xl font-bold">{formatCurrency(crypto.priceUsd)}</div>
                   <div
-                    className={`flex items-center justify-end text-sm ${crypto.change24h >= 0 ? "text-green-500" : "text-red-500"}`}
+                    className={`flex items-center justify-end text-sm ${crypto.changePercent24Hr >= 0 ? "text-green-500" : "text-red-500"}`}
                   >
-                    {crypto.change24h >= 0 ? (
+                    {crypto.changePercent24Hr >= 0 ? (
                       <TrendingUp className="h-3 w-3 mr-1" />
                     ) : (
                       <TrendingDown className="h-3 w-3 mr-1" />
                     )}
-                    <span>{crypto.change24h.toFixed(2)}%</span>
+                    <span>{Number(crypto.changePercent24Hr).toFixed(2)}%</span>
                   </div>
                 </div>
                 <Button
