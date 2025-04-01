@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
@@ -6,7 +7,6 @@ import { Providers } from "@/redux/provider"
 import { Toaster } from "@/components/ui/toaster"
 import Navbar from "@/components/navbar"
 import { WebSocketProvider } from "@/components/websocket-provider"
-
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
