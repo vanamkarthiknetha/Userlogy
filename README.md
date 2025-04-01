@@ -22,7 +22,7 @@ A web app that combines weather data, cryptocurrency prices, and real-time notif
 
 1. Clone the repo:
     ```bash
-    git clone https://github.com/yourusername/crypto-weather-nexus.git
+    git clone https://github.com/vanamkarthiknetha/Userlogy.git
     ```
 2. Install dependencies:
     ```bash
