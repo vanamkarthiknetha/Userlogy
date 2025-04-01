@@ -141,7 +141,12 @@ export default function CityPage() {
           <span className="text-muted-foreground">{cityData.country}</span>
         </div>
         <Button variant={isFavorite ? "default" : "outline"} onClick={handleToggleFavorite}>
-          {isFavorite ? "★ Favorited" : "☆ Add to Favorites"}
+          <span className="hidden md:block">
+            {isFavorite ? "★ Favorited" : "☆ Add to Favorites"}
+            </span>
+          <span className="md:hidden ">
+            {isFavorite ? "★" : "☆"}
+            </span>
         </Button>
       </div>
 
