@@ -24,20 +24,22 @@ A web app that combines weather data, cryptocurrency prices, and real-time notif
     ```bash
     git clone https://github.com/vanamkarthiknetha/Userlogy.git
     ```
-2. Install dependencies:
+2. Change directory to Userlogy & Install dependencies:
+
     ```bash
-    npm install
+    cd Userlogy
+    npm install --force
     ```
-3. Set up API keys in `.env.local`:
+4. Set up API keys in `.env.local`:
     ```
     NEXT_PUBLIC_WEATHER_API_KEY=your_weather_api_key
     NEXT_PUBLIC_NEWS_API_KEY=your_news_api_key
     ```
-4. Run the app:
+5. Run the app:
     ```bash
     npm run dev
     ```
-5. Visit [http://localhost:3000](http://localhost:3000).
+6. Visit [http://localhost:3000](http://localhost:3000).
 
 ## API Integrations
 
